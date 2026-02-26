@@ -1,24 +1,16 @@
 name: release-pages-dispatch
-
 on:
-  release:
-    types: [published]
-
+  workflow_dispatch: {}
 permissions:
   contents: read
   actions: write
-
 jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch Pages workflow on main
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: "pages.yml",
-              ref: "main"
-            });
+    - name: Dispatch Pages workflow on main
+      uses: actions/github-script@v7
+      with:
+        script: "await github.rest.actions.createWorkflowDispatch({\n  owner: context.repo.owner,\n\
+          \  repo: context.repo.repo,\n  workflow_id: \"pages.yml\",\n  ref: \"main\"\
+          \n});\n"
